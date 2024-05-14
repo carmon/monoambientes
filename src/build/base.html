@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Carmon's Personal Website, 2025 edition" />
+    <title>Monoambientes "Orlando"</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preload" href="./static/inter.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="./static/schabo.woff" as="font" crossorigin="anonymous">
+    <script defer src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="card">
+      <div id="darkbutton" onclick="javascript:toggleDarkMode()"></div>
+      <script>
+        const parser = new DOMParser();
+        const btn = document.getElementById('darkbutton');
+        const darkEl = parser.parseFromString(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>',
+          'image/svg+xml'
+        ).documentElement;
+        const lightEl = parser.parseFromString(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/></svg>',
+          'image/svg+xml'
+        ).documentElement;
+        const setDarkMode = (isDark) => {
+          const root = document.querySelector(':root');
+          if (isDark) {
+            root.style.setProperty('--primary-color', 'white');
+            root.style.setProperty('--secondary-color', 'black');
+            if (btn.lastElementChild) btn.removeChild(btn.lastElementChild);
+            btn.appendChild(darkEl);
+          } else {
+            root.style.setProperty('--primary-color', 'black');
+            root.style.setProperty('--secondary-color', 'white');
+            if (btn.lastElementChild) btn.removeChild(btn.lastElementChild);
+            btn.appendChild(lightEl);
+          }
+        };
+        if (window.matchMedia) {
+          setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            setDarkMode(event.matches);
+          });
+        } else {
+          btn.appendChild(lightEl);
+        }
+        const toggleDarkMode = () => {
+          const root = document.querySelector(':root');
+          const style = getComputedStyle(root);
+          const isDark = style.getPropertyValue('--primary-color') === 'white';
+          setDarkMode(!isDark);
+        };
+        
+        // Date utils
+        // [INSERT_ROOM_DATA]
+        function calcDays(){
+          const unit = document.getElementById('room_select').value;
+          const initDate = document.getElementById('init_date').value;
+          const endDate = document.getElementById('end_date').value;
+          if (initDate && endDate) {
+            const diff = new Date(endDate).getTime() - new Date(initDate).getTime();
+            const daysCount = Math.round(diff / (1000 * 3600 * 24));
+            if (daysCount > 0) {
+              document.getElementById('price').value = PRICES[unit].daily * daysCount;
+            } else {
+              document.getElementById('price').value = 'Ingrese una fecha de salida mayor.'
+            }
+          }
+        }
+
+        const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28, 31];
+        function setEndDate(){
+          const unit = document.getElementById('room_select').value;
+          const initDate = document.getElementById('init_date').value;
+          const monthCount = document.getElementById('month_count').value;
+          if (initDate && monthCount) {
+            const d = new Date(initDate);
+            const days = monthDays.slice(d.getMonth(), d.getMonth() + monthCount).reduce((p, c) => p + c, 0);
+            d.setDate(d.getDate() + days);
+            const st = d.getFullYear()+'-'+(d.getMonth()+1).toLocaleString('en-US', { minimumIntegerDigits: 2 })+'-'+d.getDate().toLocaleString('en-US', { minimumIntegerDigits: 2 });
+            document.getElementById('end_date').value = st;
+            document.getElementById('price').value = PRICES[unit].monthly * monthCount;
+            document.getElementById('deposit').value = PRICES[unit].monthly;
+          }
+        }
+      </script>
+      <root>
+      <script>
+        const isMobile = navigator.userAgent.match(/Mobile/i);
+        if (isMobile) {
+          document.getElementById("card").style.width = '320px';
+          document.getElementsByClassName("room-table").style.fontSize = '9px';
+        }
+      </script>
+    </div>
+  </body>
+</html>
