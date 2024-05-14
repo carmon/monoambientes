@@ -1,0 +1,17 @@
+{
+  "name": "monoambientes",
+  "version": "1.0.0",
+  "description": "Static page for contact links",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "ts-node ./src/index.ts",
+    "dev": "npx http-server ./public/"
+  },
+  "author": "Carmon",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.11",
+    "dotenv": "^16.4.5",
+    "ts-node": "^10.9.2"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Monoambientes Orlando",
+  "description": "Alquileres en Playa Unión, por día, semana o mes. <br/> Encontranos en:",
+  "avatarImage": "./avatar.jpg",
+  "links": [
+    {
+      "icon": "./instagram.svg",
+      "title": "Instagram",
+      "link": "https://instagram.com/[IG_USER]"
+    },
+    {
+      "icon": "./whatsapp.svg",
+      "title": "WhatsApp",
+      "link": "https://wa.me/[WA_NUMBER]"
+    },
+    {
+      "icon": "./email.svg",
+      "title": "e-mail",
+      "link": "mailto:[EMAIL]"
+    }
+  ]
+}
