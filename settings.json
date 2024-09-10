@@ -17,6 +17,11 @@
       "icon": "./email.svg",
       "title": "e-mail",
       "link": "mailto:[EMAIL]"
+    },
+    {
+      "icon": "./calendar.svg",
+      "title": "Agendar visita",
+      "link": "https://calendly.com/monoambientes/visita"
     }
   ]
 }

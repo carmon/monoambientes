@@ -18,10 +18,7 @@ interface Settings {
 
 const processLink = (link: string) => {
   const match = link.match(/\[\w+\]/);
-  if (!match) {
-    console.log(`No env var match for link ${link}`);
-    return;
-  }
+  if (!match) return link;
   const key = match[0];
   return link.replace(key, process.env[key.replace(/[\[|\]]/g, '')] || '');
 }
