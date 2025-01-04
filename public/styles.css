@@ -1,0 +1,52 @@
+@media (max-width: 800px) {
+  body {
+    font-size: 1.5em;
+  }
+}
+body {
+  background-color: #FFEBCD;
+  background-image:  linear-gradient(135deg, #B0E0E6 25%, transparent 25%), linear-gradient(225deg, #B0E0E6 25%, transparent 25%), linear-gradient(45deg, #B0E0E6 25%, transparent 25%), linear-gradient(315deg, #B0E0E6 25%, transparent 25%);
+  background-position:  5px 0, 5px 0px, 0 0, 0 0;
+  background-size: 20px 20px;
+  font-family: sans-serif;
+  text-align: center;
+}
+.avatar-container {
+  display: flex;
+  justify-content: center;
+}
+.avatar {
+  width: 140px;
+  height: 140px;
+  margin: 1rem 0 1.5rem;
+  border-radius: 50%;
+}
+h1 {
+  color: #000;
+}
+span {
+  color: #000;
+  font-weight: 600;
+}
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+}
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  list-style-type: none;
+}
+a {
+  color: #000;
+  font-weight: 600;
+  text-decoration: underline;
+}
+img {
+  width: 24px;
+  height: 24px;
+}
