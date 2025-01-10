@@ -113,13 +113,18 @@ body {
   }
   button {
     align-self: center;
-    margin-top: 8px;
     width: 120px;
   }
   .date-pickers {
     display: flex;
     justify-content: center;
-    gap: 4px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .price {
+    border: 1px solid var(--primary-color);
+    padding-bottom: 4px;
+    margin: 8px 64px;
   }
 }
 footer {

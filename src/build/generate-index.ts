@@ -53,34 +53,43 @@ async function generateHTML() {
       )}
     ${addSection(
       `<div class="reservation">
-        <form hx-post="/api/make-reservation">
+        <form hx-post="/api/reservation/make">
           <label>
             Nombre completo<br/>
-            <input id="name" type="text" required />
+            <input name="name" type="text" required />
           </label>
           <label>
             Email<br/>
-            <input id="email" type="text" required />
+            <input name="email" type="text" required />
           </label>
           <label>
             Telefono<br/>
-            <input id="tel" type="text" required />
+            <input name="tel" type="text" required />
           </label>
           <label>
             Departamento<br/>
-            <select hx-get="/api/mono/availables" hx-trigger="load once">
+            <select name="room" hx-get="/api/mono/availables" hx-trigger="load once">
             </select>
           </label>
+          <fieldset>
+            <legend>Modalidad</legend>
+            <label><input type="radio" name="mode" value="day" checked hx-trigger="click" hx-get="/api/reservation/dates" hx-target=".date-pickers" />Diario</label>
+            <label><input type="radio" name="mode" value="month" hx-trigger="click" hx-get="/api/reservation/dates" hx-target=".date-pickers" />Mensual</label>
+          </fieldset>
           <div class="date-pickers">
             <label>
               Fecha de ingreso<br/>
-              <input id="init_date" type="date" />
+              <input name="init_date" type="date" />
             </label>
             <label>
               Fecha de salida<br/>
-              <input id="end_date" type="date" />
+              <input name="end_date" type="date" />
             </label>
           </div>
+          <label class="price">
+            Precio final (puede variar)<br/>
+            <input name="price" type="text" disabled />
+          </label>
           <button type="submit">Reservar</button>
         </form>
       </div>`, 
@@ -97,6 +106,7 @@ async function generateHTML() {
       ©Copyright 2025. Todos los derechos reservados.
     </footer>
   `);
+  console.log(newHTML.replaceAll(`\n`,''));
   await fs.writeFile('./public/index.html', newHTML.replace(/$/,''));
 }
 console.log('PRELOAD::: Generating public/index.html');
