@@ -1,18 +1,7 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "noEmitOnError": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "target": "ES6"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+    "target": "ES6",
+    "outDir": "public",
+    "moduleResolution": "node"
+  }
 }

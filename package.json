@@ -1,17 +1,18 @@
 {
-  "name": "monoambientes",
-  "version": "1.0.0",
-  "description": "Static page for contact links",
-  "main": "./src/index.ts",
+  "name": "monoambientes2025",
+  "version": "0.1.0",
   "scripts": {
-    "build": "ts-node ./src/index.ts",
-    "dev": "npx http-server ./public/"
+    "deploy": "npm run generate-index",
+    "local-dev": "npx http-server public",
+    "compile-libs": "tsc --p tsconfig.json",
+    "generate-index": "node --experimental-strip-types src/0_preload/generate-index.ts"
   },
-  "author": "Carmon",
-  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.12.0"
+  },
   "devDependencies": {
-    "@types/node": "^20.12.11",
-    "dotenv": "^16.4.5",
-    "ts-node": "^10.9.2"
+    "@types/google.maps": "^3.58.1",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.3"
   }
 }

@@ -1,3 +1,5 @@
-node_modules/
-public/index.html
+node_modules
+.vercel
 .env
+public/*.html
+public/*.js
