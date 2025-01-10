@@ -2,10 +2,9 @@
   "name": "monoambientes2025",
   "version": "0.1.0",
   "scripts": {
-    "deploy": "npm run generate-index",
+    "deploy": "npm run build",
     "local-dev": "npx http-server public",
-    "compile-libs": "tsc --p tsconfig.json",
-    "generate-index": "node --experimental-strip-types src/0_preload/generate-index.ts"
+    "build": "node --experimental-strip-types src/build/generate-index.ts"
   },
   "dependencies": {
     "mongodb": "^6.12.0"

@@ -21,9 +21,7 @@ async function generateHTML() {
       });
   }
   // Load base HTML
-  const baseHTML = (await fs.readFile('./src/0_preload/base.html')).toString();
-  
-  // Render heading
+  const baseHTML = (await fs.readFile('./src/build/base.html')).toString();
   const newHTML = baseHTML.replace('<root>', `
     <div class="avatar-container">
     <img src="./static/avatar.jpg" class="avatar" alt='Monoambientes "Orlando"' />
@@ -54,21 +52,23 @@ async function generateHTML() {
         'Disponibilidad y Tarifas'
       )}
     ${addSection(
-      `<form hx-post="/api/make-reservation">
-        <label>
-          Nombre completo
-          <input id="name" type="text" />
-        </label>
-        <label>
-          Fecha de ingreso
-          <input id="init_date" type="date" />
-        </label>
-        <label>
-          Fecha de salida
-          <input id="end_date" type="date" />
-        </label>
-        <button type="submit">Reservar</button>
-      </form>`, 
+      `<div class="reservation">
+        <form hx-post="/api/make-reservation">
+          <label>
+            Nombre completo
+            <input id="name" type="text" />
+          </label>
+          <label>
+            Fecha de ingreso
+            <input id="init_date" type="date" />
+          </label>
+          <label>
+            Fecha de salida
+            <input id="end_date" type="date" />
+          </label>
+          <button type="submit">Reservar</button>
+        </form>
+      </div>`, 
       'Reservar'
     )}
     ${addSection(
@@ -82,9 +82,7 @@ async function generateHTML() {
       ©Copyright 2025. Todos los derechos reservados.
     </footer>
   `);
-
   await fs.writeFile('./public/index.html', newHTML);
 }
-
-console.log('0_PRELOAD::: Generating index.html');
+console.log('PRELOAD::: Generating public/index.html');
 generateHTML();
