@@ -6,6 +6,19 @@
   font-family: 'Inter Regular';
   src: url(static/inter.woff);
 }
+#darkbutton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0 0 8px;
+  width: 32px; 
+  cursor: pointer;
+  position: fixed;
+  background-color: var(--secondary-color);
+  svg {
+    fill: var(--primary-color);
+  }
+}
 :root {
   --primary-color: black;
   --secondary-color: white;
@@ -109,20 +122,6 @@ body {
     gap: 4px;
   }
 }
-.contact-target {
-  svg {
-    fill: var(--primary-color);
-  }
-}
-#darkbutton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 8px 0 0 8px;
-  width: 32px; 
-  cursor: pointer;
-  position: fixed;
-}
 footer {
   padding-top: 24px;
   padding-bottom: 24px;
@@ -131,8 +130,9 @@ footer {
 .contacts {
   margin-top: 8px;
   margin-bottom: 8px;
-  img {
+  svg {
     width: 32px;
     height: 32px;
+    color: var(--primary-color);
   }
 }

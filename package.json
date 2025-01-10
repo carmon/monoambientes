@@ -2,7 +2,6 @@
   "name": "monoambientes2025",
   "version": "0.1.0",
   "scripts": {
-    "deploy": "npm run build",
     "local-dev": "npx http-server public",
     "build": "node --experimental-strip-types src/build/generate-index.ts"
   },

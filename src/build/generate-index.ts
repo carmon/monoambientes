@@ -56,15 +56,15 @@ async function generateHTML() {
         <form hx-post="/api/make-reservation">
           <label>
             Nombre completo<br/>
-            <input id="name" type="text" />
+            <input id="name" type="text" required />
           </label>
           <label>
             Email<br/>
-            <input id="email" type="text" />
+            <input id="email" type="text" required />
           </label>
           <label>
             Telefono<br/>
-            <input id="tel" type="text" />
+            <input id="tel" type="text" required />
           </label>
           <label>
             Departamento<br/>
@@ -88,8 +88,8 @@ async function generateHTML() {
     )}
     ${addSection(
       `<div class="contacts">
-        <a href='https://instagram.com/${getEnv('IG_USER')}' target='_blank' title='Instagram'><img src='static/instagram.svg' alt='instagram' /></a>
-        <a href='mailto:${getEnv('MAIL_TO')}' target='_blank' title='Email'><img src='static/email.svg' alt='email' /></a>
+        <a href='https://instagram.com/${getEnv('IG_USER')}' target='_blank' title='Instagram'>${(await fs.readFile('./src/build/instagram.svg')).toString()}</a>
+        <a href='mailto:${getEnv('MAIL_TO')}' target='_blank' title='Email'>${(await fs.readFile('./src/build/email.svg')).toString()}</a>
       </div>`, 
       'Contacto'
     )}
@@ -97,7 +97,7 @@ async function generateHTML() {
       ©Copyright 2025. Todos los derechos reservados.
     </footer>
   `);
-  await fs.writeFile('./public/index.html', newHTML);
+  await fs.writeFile('./public/index.html', newHTML.replace(/$/,''));
 }
 console.log('PRELOAD::: Generating public/index.html');
 generateHTML();
