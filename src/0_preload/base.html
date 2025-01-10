@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Carmon's Personal Website, 2025 edition" />
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+    <title>Monoambientes "Orlando"</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div id="card">
+      <div id="darkbutton" onclick="javascript:toggleDarkMode()"></div>
+      <script>
+        const parser = new DOMParser();
+        const btn = document.getElementById('darkbutton');
+        const darkEl = parser.parseFromString(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>',
+          'image/svg+xml'
+        ).documentElement;
+        const lightEl = parser.parseFromString(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/></svg>',
+          'image/svg+xml'
+        ).documentElement;
+        const setDarkMode = (isDark) => {
+          const root = document.querySelector(':root');
+          if (isDark) {
+            root.style.setProperty('--primary-color', 'white');
+            root.style.setProperty('--secondary-color', 'black');
+            if (btn.lastElementChild) btn.removeChild(btn.lastElementChild);
+            btn.appendChild(darkEl);
+          } else {
+            root.style.setProperty('--primary-color', 'black');
+            root.style.setProperty('--secondary-color', 'white');
+            if (btn.lastElementChild) btn.removeChild(btn.lastElementChild);
+            btn.appendChild(lightEl);
+          }
+        };
+        if (window.matchMedia) {
+          setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            setDarkMode(event.matches);
+          });
+        } else {
+          btn.appendChild(lightEl);
+        }
+        const toggleDarkMode = () => {
+          const root = document.querySelector(':root');
+          const style = getComputedStyle(root);
+          const isDark = style.getPropertyValue('--primary-color') === 'white';
+          setDarkMode(!isDark);
+        };
+      </script>
+      <root>
+      <script>
+        const isMobile = navigator.userAgent.match(/Mobile/i);
+        if (isMobile) {
+          document.getElementById("card").style.width = '320px';
+          document.getElementsByClassName("mono-table").style.fontSize = '9px';
+        }
+      </script>
+    </div>
+  </body>
+</html>
