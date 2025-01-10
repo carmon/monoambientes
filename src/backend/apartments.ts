@@ -3,15 +3,15 @@ type Price = {
   monthly: number | null;
 }
 
-type Range = 'base' | 'low' | 'temp' | 'big'; 
+export type Range = 'base' | 'low' | 'temp' | 'big'; 
 
-type MonoData = {
+export type MonoData = {
   unit?: number;
   capacity: number;
   range: Range;
 }
 
-const PriceRanges: Record<Range, Price> = {
+export const PriceRanges: Record<Range, Price> = {
   base: {
     daily: 30000,
     monthly: 300000,
@@ -45,30 +45,14 @@ const APARTMENTS: MonoData[] = [
 const UNAVAILABLE = [1, 5, 9];
 const FILLED = [2, 4, 7];
 
-export async function GET() {
-  const available: MonoData[] = APARTMENTS.reduce((prev, curr, it) => {
+export function getAvailableData(): MonoData[] {
+  return APARTMENTS.reduce((prev, curr, it) => {
     const unit = it + 1;
     if (UNAVAILABLE.includes(unit) || FILLED.includes(unit)) return prev;
     return [...prev, { ...curr, unit }];
   }, <MonoData[]>[]);
-  
-  let html = '';
-  
-  const drawRange = (r: Range) => {
-    const price = PriceRanges[r];
-    return `
-      <li>Por día: $${price.daily}</li>
-      <li>Por mes: ${price.monthly ? '$' + price.monthly : 'NO'}</li>
-    `;
-  };
-  
-  available.forEach((v, it) => {
-    html += '<tr>';
-    html += `<td>${v.unit}</td>`;
-    html += `<td>Hasta ${v.capacity} persona${v.capacity > 1 ? 's' : ''}.</td>`;
-    html += `<td><ul style="list-style-type: none; padding-left: 16px; padding-right: 16px;" >${drawRange(v.range)}</ul></td>`;
-    html += '</tr>';
-  });
+};
 
-  return new Response(html);
+export function getAvailableOptions(): string {
+  return getAvailableData().map((data: MonoData) => `<option value="${data.unit}">${data.unit} (${data.capacity} personas)</option>`).join('');
 }
