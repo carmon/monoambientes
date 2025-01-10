@@ -46,7 +46,7 @@ async function generateHTML() {
             <th>Capacidad</th>
             <th>Precio</th>
           </thead>
-          <tbody hx-get="/api/mono" hx-trigger="load once">
+          <tbody hx-get="/api/mono/ranges" hx-trigger="load once">
           </tbody>
         </table>`, 
         'Disponibilidad y Tarifas'
@@ -55,17 +55,32 @@ async function generateHTML() {
       `<div class="reservation">
         <form hx-post="/api/make-reservation">
           <label>
-            Nombre completo
+            Nombre completo<br/>
             <input id="name" type="text" />
           </label>
           <label>
-            Fecha de ingreso
-            <input id="init_date" type="date" />
+            Email<br/>
+            <input id="email" type="text" />
           </label>
           <label>
-            Fecha de salida
-            <input id="end_date" type="date" />
+            Telefono<br/>
+            <input id="tel" type="text" />
           </label>
+          <label>
+            Departamento<br/>
+            <select hx-get="/api/mono/availables" hx-trigger="load once">
+            </select>
+          </label>
+          <div class="date-pickers">
+            <label>
+              Fecha de ingreso<br/>
+              <input id="init_date" type="date" />
+            </label>
+            <label>
+              Fecha de salida<br/>
+              <input id="end_date" type="date" />
+            </label>
+          </div>
           <button type="submit">Reservar</button>
         </form>
       </div>`, 
