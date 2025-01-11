@@ -1,16 +1,18 @@
 const fs = require('fs/promises');
 
+const isLocal = process.env.NODE_ENV === 'development';
+
+const ENV: Record<string, string> = {};
+const getEnv = (key: string) => isLocal ? ENV[key] : process.env[key];
+
 const addSection = (inner: string, title: string) => 
   `<details class="section">
   <summary>${title}</summary>
   ${inner}
   </details>`;
 
-const ENV: Record<string, string> = {};
-const getEnv = (key: string) => process.env.NODE_ENV === 'development' ? ENV[key] : process.env[key];
-
 async function generateHTML() {
-  if (process.env.NODE_ENV === 'development') {
+  if (isLocal) {
     // Parse .env file
     (await fs.readFile('.env')).toString()
       .split('\n')
@@ -46,7 +48,7 @@ async function generateHTML() {
             <th>Capacidad</th>
             <th>Precio</th>
           </thead>
-          <tbody hx-get="/api/mono/ranges" hx-trigger="load once">
+          <tbody hx-get="/api/room/ranges" hx-trigger="load once">
           </tbody>
         </table>`, 
         'Disponibilidad y Tarifas'
@@ -68,7 +70,7 @@ async function generateHTML() {
           </label>
           <label>
             Departamento<br/>
-            <select name="room" hx-get="/api/mono/availables" hx-trigger="load once">
+            <select name="room" hx-get="/api/room/availables" hx-trigger="load once">
             </select>
           </label>
           <fieldset>
@@ -79,11 +81,11 @@ async function generateHTML() {
           <div class="date-pickers">
             <label>
               Fecha de ingreso<br/>
-              <input name="init_date" type="date" />
+              <input name="init_date" type="date" required />
             </label>
             <label>
               Fecha de salida<br/>
-              <input name="end_date" type="date" />
+              <input name="end_date" type="date" required />
             </label>
           </div>
           <label class="price">
@@ -105,9 +107,9 @@ async function generateHTML() {
     <footer>
       ©Copyright 2025. Todos los derechos reservados.
     </footer>
-  `);
-  console.log(newHTML.replaceAll(`\n`,''));
-  await fs.writeFile('./public/index.html', newHTML.replace(/$/,''));
+  `).replaceAll('\n','');
+  if (isLocal) console.log(newHTML);
+  await fs.writeFile('./public/index.html', newHTML);
 }
 console.log('PRELOAD::: Generating public/index.html');
 generateHTML();
