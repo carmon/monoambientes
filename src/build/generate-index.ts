@@ -1,4 +1,5 @@
-const fs = require('fs/promises');
+import * as fs from 'fs/promises';
+import { getDateHTML } from '../common/dateHTML.ts';
 
 const isLocal = process.env.NODE_ENV === 'development';
 
@@ -79,14 +80,7 @@ async function generateHTML() {
             <label><input type="radio" name="mode" value="month" hx-trigger="click" hx-get="/api/reservation/dates" hx-target=".date-pickers" />Mensual</label>
           </fieldset>
           <div class="date-pickers">
-            <label>
-              Fecha de ingreso<br/>
-              <input name="init_date" type="date" required />
-            </label>
-            <label>
-              Fecha de salida<br/>
-              <input name="end_date" type="date" required />
-            </label>
+            ${getDateHTML('day')}
           </div>
           <label class="price">
             Precio final (puede variar)<br/>
