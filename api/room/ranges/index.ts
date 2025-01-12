@@ -1,5 +1,5 @@
-import { getAvailableData, PriceRanges } from "../../../src/backend/apartments"; 
-import type { MonoData, Range } from "../../../src/backend/apartments";
+import { getAvailableData, PriceRanges } from "../../../src/backend/rooms"; 
+import type { MonoData, Range } from "../../../src/backend/rooms";
 export async function GET() {
   const available: MonoData[] = getAvailableData();
   let html = '';

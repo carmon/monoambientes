@@ -11,9 +11,9 @@
   align-items: center;
   justify-content: center;
   margin: 8px 0 0 8px;
-  width: 32px; 
+  width: 32px;
   cursor: pointer;
-  position: fixed;
+  position: sticky;
   background-color: var(--secondary-color);
   svg {
     fill: var(--primary-color);

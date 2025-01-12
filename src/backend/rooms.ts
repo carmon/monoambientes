@@ -43,7 +43,7 @@ const APARTMENTS: MonoData[] = [
 ];
 
 const UNAVAILABLE = [1, 5, 9];
-const FILLED = [2, 4, 7];
+const FILLED = [2, 4, 6, 7, 8];
 
 export function getAvailableData(): MonoData[] {
   return APARTMENTS.reduce((prev, curr, it) => {
@@ -52,7 +52,3 @@ export function getAvailableData(): MonoData[] {
     return [...prev, { ...curr, unit }];
   }, <MonoData[]>[]);
 };
-
-export function getAvailableOptions(): string {
-  return getAvailableData().map((data: MonoData) => `<option value="${data.unit}">${data.unit} (${data.capacity} personas)</option>`).join('');
-}
