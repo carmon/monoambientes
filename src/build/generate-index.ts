@@ -23,7 +23,10 @@ async function generateHTML() {
         ENV[k] = v;
       });
   }
-  // Load base HTML
+  const packageJSON = (await fs.readFile('./package.json')).toString();
+  const match = packageJSON.match(/"version": "([0-9\.]+)",/);
+  const version = match ? match[1] : '0.0.1';
+  
   const baseHTML = (await fs.readFile('./src/build/base.html')).toString();
   const newHTML = baseHTML.replace('<root>', `
     <div class="avatar-container">
@@ -57,35 +60,31 @@ async function generateHTML() {
     ${addSection(
       `<div class="reservation">
         <form hx-post="/api/reservation/make">
+          <fieldset>
+          <legend>Contacto</legend>
+          <label>Nombre completo <input name="name" type="text" required /></label>
+          <label>Email <input name="email" type="text" required /></label>
+          <label>Telefono <input name="tel" type="text" required /></label>
+          </fieldset>
+          <fieldset>
+          <legend>Reserva</legend>
           <label>
-            Nombre completo<br/>
-            <input name="name" type="text" required />
-          </label>
-          <label>
-            Email<br/>
-            <input name="email" type="text" required />
-          </label>
-          <label>
-            Telefono<br/>
-            <input name="tel" type="text" required />
-          </label>
-          <label>
-            Departamento<br/>
+            Departamento
             <select name="room" hx-get="/api/room/availables" hx-trigger="load once">
             </select>
           </label>
-          <fieldset>
-            <legend>Modalidad</legend>
-            <label><input type="radio" name="mode" value="day" checked hx-trigger="click" hx-get="/api/reservation/dates" hx-target=".date-pickers" />Diario</label>
-            <label><input type="radio" name="mode" value="month" hx-trigger="click" hx-get="/api/reservation/dates" hx-target=".date-pickers" />Mensual</label>
-          </fieldset>
+          <label>
+            Modalidad
+            <select name="mode" hx-get="/api/reservation/dates" hx-target=".date-pickers" hx-trigger="change">
+              <option value="day">Diario</option>
+              <option value="month">Mensual</option>
+            </select>
+          </label>
           <div class="date-pickers">
             ${getDateHTML('day')}
           </div>
-          <label class="price">
-            Precio final (puede variar)<br/>
-            <input name="price" type="text" disabled />
-          </label>
+          <label class="price">Precio final (aproximado) <input name="price" type="text" disabled /></label>
+          </fieldset>
           <button type="submit">Reservar</button>
         </form>
       </div>`, 
@@ -99,7 +98,7 @@ async function generateHTML() {
       'Contacto'
     )}
     <footer>
-      ©Copyright 2025. Todos los derechos reservados.
+      Monoambientes v${version} - ©Copyright 2025 - Todos los derechos reservados
     </footer>
   `).replaceAll('\n','');
   if (isLocal) console.log(newHTML);

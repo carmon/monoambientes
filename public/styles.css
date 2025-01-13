@@ -106,24 +106,26 @@ body {
     flex-direction: column;
   }
   label {
+    display: flex;
+    justify-content: space-between;
     margin-top: 4px;
+    max-height: 24px;
+  }
+  input, select {
+    width: 50%;
+  }
+  button {
+    align-self: center;
+    margin-top: 8px;
+    width: 120px;
   }
   p {
     margin: 0;
   }
-  button {
-    align-self: center;
-    width: 120px;
-  }
   .date-pickers {
     display: flex;
-    justify-content: center;
-    gap: 8px;
+    flex-direction: column;
     flex-wrap: wrap;
-  }
-  .price {
-    padding-bottom: 4px;
-    margin: 8px 64px;
   }
 }
 footer {

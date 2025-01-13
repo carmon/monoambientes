@@ -9,11 +9,11 @@ export function getDateHTML(mode: Mode): string {
   if (mode === 'day') {
     return `
       <label>
-        Fecha de ingreso<br/>
+        Fecha de ingreso
         <input name="init_date" type="date" min="${min}" max="${max}" required />
       </label>
       <label>
-        Fecha de salida<br/>
+        Fecha de salida
         <input name="end_date" type="date" min="${min}" max="${max}" required />
       </label>
     `
@@ -34,11 +34,11 @@ export function getDateHTML(mode: Mode): string {
       }
     </script>
     <label>
-      Fecha de ingreso<br/>
+      Fecha de ingreso
       <input id="init_date" onchange="setEndDate()" name="init_date" type="date" min="${min}" max="${max}" required />
     </label>
     <label>
-      Cantidad de meses<br/>
+      Cantidad de meses
       <select id="month_count" onchange="setEndDate()" name="month_count" required>
         <option value="1">1</option>
         <option value="2">2</option>
