@@ -33,18 +33,11 @@ async function generateHTML() {
     <img src="./static/avatar.webp" class="avatar" alt='Monoambientes "Orlando"' />
     </div>
     <span class="header">Monoambientes "Orlando"</span>
-    <marquee>Alquiler de monoambientes para 1, 2 y 3 personas en Playa Unión</marquee>
-    ${addSection(`
-      <iframe 
-        width="100%" 
-        height="500px" 
-        src="https://api.mapbox.com/styles/v1/carmonmaps/cm5r26fy8003s01rs0a2eh1mt.html?title=false&access_token=${getEnv('MAPS_TOKEN')}&zoomwheel=false#13.13/-43.317/-65.05"
-        title="Monoambientes" 
-        style="border:none;"
-      ></iframe>
-      `, 
-      'Ubicación'
-    )}
+    <p>Alquiler de monoambientes para 1, 2 y 3 personas en Playa Unión</p>
+    <details class="section" hx-get="/api/htmx/mapbox" hx-trigger="click once" hx-target="#mapbox">
+      <summary>Ubicación</summary>
+      <div id="mapbox" />
+    </details>
     ${addSection(
       `<table class="mono-table">
           <thead>
