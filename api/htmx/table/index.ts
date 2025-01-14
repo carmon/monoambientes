@@ -14,7 +14,7 @@ export async function GET() {
     html += '<tr>';
     html += `<td>${v.unit}</td>`;
     html += `<td>Hasta ${v.capacity} persona${v.capacity > 1 ? 's' : ''}.</td>`;
-    html += `<td><ul style="list-style-type: none; padding-left: 16px; padding-right: 16px;" >${drawRange(v.range)}</ul></td>`;
+    html += `<td><ul>${drawRange(v.range)}</ul></td>`;
     html += '</tr>';
   });
   return new Response(html);

@@ -20,9 +20,10 @@ async function generateHTML() {
   const version = match ? match[1] : '0.0.1';
   
   const baseHTML = (await fs.readFile('./src/build/base.html')).toString();
-  const newHTML = baseHTML.replace('<root>', `
-    <div class="avatar-container">
-    <img src="./static/avatar.webp" class="avatar" alt='Monoambientes "Orlando"' />
+  const newHTML = baseHTML.replace(
+    '<root>', 
+    `<div class="avatar-container">
+      <img src="./static/avatar.webp" class="avatar" alt='Monoambientes "Orlando"' />
     </div>
     <span class="header">Monoambientes "Orlando"</span>
     <p>Alquiler de monoambientes para 1, 2 y 3 personas en Playa Unión</p>
@@ -78,8 +79,7 @@ async function generateHTML() {
     </details>
     <footer>
       Monoambientes v${version} - ©Copyright 2025 - Todos los derechos reservados
-    </footer>
-  `).replaceAll('\n','');
+    </footer>`);
   if (isLocal) console.log(newHTML);
   await fs.writeFile('./public/index.html', newHTML);
 }

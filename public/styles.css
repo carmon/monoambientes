@@ -104,6 +104,13 @@ body {
     tr:not(:last-child) {
       border-bottom: 1px solid var(--primary-color);
     }
+    td {
+      ul {
+        list-style-type: none; 
+        padding: 2px 8px;
+        margin: 0;
+      }
+    }
   }
   svg {
     fill: var(--primary-color);
