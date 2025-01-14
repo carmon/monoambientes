@@ -3,14 +3,14 @@ Monoambientes "Orlando" page
 
 Static page build from TypeScript and deployed over vercel.
 
-### APP has 2 sides
+### The app has 2 sides
 
-#### PRELOAD
+#### Preload
 
-This is basically *vanilla typescript*, it uses __fs__ to read a `settings.json` file for variables and a local `index.html` and writes a target `index.html` into `/public` folder.
-Also uses __dotenv__ to write *private* needed variables to make the links work. TypeScript is run through __ts-node__.
+This is basically *vanilla typescript* -check `build-index.ts`- that loads a `base.html` and inserts HTML code inside a _<root>_ and 
+saves it in `public/index.html` so vercel can pick it up.
 
-#### BACKEND
+#### Backend
 
 Uses [HTMX]('http://htmx.org') and [Vercel]('http://vercel.com') API routes on the end.
 
@@ -21,7 +21,7 @@ __Requirements:__
 - vercel cli: `npm i -g vercel`
 
 __BUILD__
-- `npm run generate-html`
+- `npm run build`
 
 __RUN__
 - `vercel dev`

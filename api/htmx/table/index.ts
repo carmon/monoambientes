@@ -10,7 +10,7 @@ export async function GET() {
       <li>Por mes: ${price.monthly ? '$' + price.monthly : 'NO'}</li>
     `;
   };
-  available.forEach((v, it) => {
+  available.forEach(v => {
     html += '<tr>';
     html += `<td>${v.unit}</td>`;
     html += `<td>Hasta ${v.capacity} persona${v.capacity > 1 ? 's' : ''}.</td>`;
