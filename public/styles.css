@@ -122,11 +122,6 @@ body {
   p {
     margin: 0;
   }
-  .date-pickers {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
 }
 footer {
   padding-top: 24px;

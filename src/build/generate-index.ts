@@ -30,7 +30,7 @@ async function generateHTML() {
   const baseHTML = (await fs.readFile('./src/build/base.html')).toString();
   const newHTML = baseHTML.replace('<root>', `
     <div class="avatar-container">
-    <img src="./static/avatar.jpg" class="avatar" alt='Monoambientes "Orlando"' />
+    <img src="./static/avatar.webp" class="avatar" alt='Monoambientes "Orlando"' />
     </div>
     <span class="header">Monoambientes "Orlando"</span>
     <marquee>Alquiler de monoambientes para 1, 2 y 3 personas en Playa Unión</marquee>
@@ -69,21 +69,19 @@ async function generateHTML() {
           <fieldset>
           <legend>Reserva</legend>
           <label>
-            Departamento
-            <select name="room" hx-get="/api/room/availables" hx-trigger="load once">
-            </select>
-          </label>
-          <label>
             Modalidad
             <select name="mode" hx-get="/api/reservation/dates" hx-target=".date-pickers" hx-trigger="change">
               <option value="day">Diario</option>
               <option value="month">Mensual</option>
             </select>
           </label>
-          <div class="date-pickers">
-            ${getDateHTML('day')}
-          </div>
-          <label class="price">Precio final (aproximado) <input name="price" type="text" disabled /></label>
+          <label>
+            Departamento
+            <select name="room" hx-get="/api/room/availables" hx-trigger="load once">
+            </select>
+          </label>
+          ${getDateHTML('day')}
+          <label>Precio final (aproximado) <input id="price" type="text" disabled /></label>
           </fieldset>
           <button type="submit">Reservar</button>
         </form>
