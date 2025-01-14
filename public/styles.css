@@ -1,10 +1,12 @@
 @font-face {
   font-family: 'Schabo Condensed';
   src: url(static/schabo.woff);
+  font-display: swap;
 }
 @font-face {
   font-family: 'Inter Regular';
   src: url(static/inter.woff);
+  font-display: swap;
 }
 #darkbutton {
   display: flex;
@@ -56,7 +58,6 @@ body {
 .section {
   border: 1px solid var(--primary-color);
   border-radius: 4px;
-  /* border-right: 6px solid var(--primary-color); */
   border-bottom: 6px solid var(--primary-color);
   margin-bottom: 6px;
   margin-left: 6px;
