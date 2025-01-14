@@ -72,16 +72,25 @@ body {
     padding: 5px;
   }
 }
-.mono-table {
+.room-table {
   position: relative;
   left: 5%;
   width: 90%;
   border-collapse: collapse;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   margin-top: 24px;
   thead {
     th {
       border-bottom: 2px solid var(--primary-color);
+    }
+    th:first-child {
+      min-width: 124px;
+    }
+    th:nth-child(2) {
+      min-width: 154px;
+    }
+    th:nth-child(3) {
+      min-width: 194px;
     }
     th:nth-child(-n+2) {
       border-right: 1px solid var(--primary-color);
@@ -97,6 +106,13 @@ body {
   }
   svg {
     fill: var(--primary-color);
+  }
+}
+.annotations {
+  margin: 0 32px 24px 32px;
+  p {
+    margin: 4px 0;
+    text-align: justify;
   }
 }
 .reservation {

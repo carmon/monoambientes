@@ -1,6 +1,6 @@
 {
   "name": "monoambientes2025",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "local-dev": "npx http-server public",
     "build-dev": "NODE_ENV=development node --experimental-strip-types src/build/generate-index.ts",

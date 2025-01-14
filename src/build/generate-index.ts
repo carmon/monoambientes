@@ -1,16 +1,8 @@
 import * as fs from 'fs/promises';
-import { getDateHTML } from '../common/dateHTML.ts';
-
-const isLocal = process.env.NODE_ENV === 'development';
 
 const ENV: Record<string, string> = {};
 const getEnv = (key: string) => isLocal ? ENV[key] : process.env[key];
-
-const addSection = (inner: string, title: string) => 
-  `<details class="section">
-  <summary>${title}</summary>
-  ${inner}
-  </details>`;
+const isLocal = process.env.NODE_ENV === 'development';
 
 async function generateHTML() {
   if (isLocal) {
@@ -38,20 +30,25 @@ async function generateHTML() {
       <summary>Ubicación</summary>
       <div id="mapbox" />
     </details>
-    ${addSection(
-      `<table class="mono-table">
-          <thead>
-            <th>Unidad</th>
-            <th>Capacidad</th>
-            <th>Precio</th>
-          </thead>
-          <tbody hx-get="/api/room/ranges" hx-trigger="load once">
-          </tbody>
-        </table>`, 
-        'Disponibilidad y Tarifas'
-      )}
-    ${addSection(
-      `<div class="reservation">
+    <details class="section" hx-get="/api/htmx/table" hx-trigger="click once" hx-target="#tbody">
+      <summary>Disponibilidad y Tarifas</summary>
+      <table class="room-table">
+        <thead>
+          <th>Departamento</th>
+          <th>Capacidad</th>
+          <th>Precio</th>
+        </thead>
+        <tbody id="tbody" />
+      </table>
+      <div class="annotations">
+        <p>Todos los departamentos son amoblados y tienen todos los servicios incluídos.</p>
+        <p>Los alquileres mensuales requieren un depósito de 1 mes para ocuparlos.</p>
+        <p>Los alquileres diarios vienen con ropa de cama, utensilios y toallas incluídas.</p>
+      </div>
+    </details>
+    <details class="section">
+      <summary>Reservar</summary>
+      <div class="reservation">
         <form hx-post="/api/reservation/make">
           <fieldset>
           <legend>Contacto</legend>
@@ -63,31 +60,22 @@ async function generateHTML() {
           <legend>Reserva</legend>
           <label>
             Modalidad
-            <select name="mode" hx-get="/api/reservation/dates" hx-target=".date-pickers" hx-trigger="change">
+            <select name="mode" hx-get="/api/htmx/form" hx-target="#form" hx-trigger="change">
               <option value="day">Diario</option>
               <option value="month">Mensual</option>
             </select>
           </label>
-          <label>
-            Departamento
-            <select name="room" hx-get="/api/room/availables" hx-trigger="load once">
-            </select>
-          </label>
-          ${getDateHTML('day')}
-          <label>Precio final (aproximado) <input id="price" type="text" disabled /></label>
-          </fieldset>
-          <button type="submit">Reservar</button>
+          <div id="form" hx-get="/api/htmx/form?mode=day" hx-target="this" hx-trigger="load once"/>
         </form>
-      </div>`, 
-      'Reservar'
-    )}
-    ${addSection(
-      `<div class="contacts">
-        <a href='https://instagram.com/${getEnv('IG_USER')}' target='_blank' title='Instagram'>${(await fs.readFile('./src/build/instagram.svg')).toString()}</a>
-        <a href='mailto:${getEnv('MAIL_TO')}' target='_blank' title='Email'>${(await fs.readFile('./src/build/email.svg')).toString()}</a>
-      </div>`, 
-      'Contacto'
-    )}
+      </div>
+    </details>
+    <details class="section">
+      <summary>Contacto</summary>
+      <div class="contacts">
+        <a href='https://instagram.com/${getEnv('IG_USER')}' target='_blank' title='Instagram'>${(await fs.readFile('./embed/instagram.svg')).toString()}</a>
+        <a href='mailto:${getEnv('MAIL_TO')}' target='_blank' title='Email'>${(await fs.readFile('./embed/email.svg')).toString()}</a>
+      </div>
+    </details>
     <footer>
       Monoambientes v${version} - ©Copyright 2025 - Todos los derechos reservados
     </footer>
