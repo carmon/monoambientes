@@ -38,19 +38,16 @@ export async function GET(request: Request) {
         <input id="init_date" onchange="setEndDate()" name="init_date" type="date" min="${min}" max="${max}" required />
       </label>
       <label>
-        Cantidad de meses
-        <select id="month_count" onchange="setEndDate()" name="month_count" required>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3 (máximo)</option>
-        </select>
-      </label>
-      <label>
         Fecha de salida<br/>
         <input id="end_date" name="end_date" type="date" disabled />
       </label>
       <label>Precio final (aproximado) <input id="price" type="text" disabled /></label>
       <label>+ depósito de: <input id="deposit" type="text" disabled /></label>
+      <br/>
+      <fieldset class="note">
+        Para alquileres mensuales se firma un contrato a 3 meses, que puede ser rescindido por el propietario o bajo arreglo previo.
+        El depósito es obligatorio, el resto de los requisitos son: DNI y recibo de sueldo o garantía (con DNI fotocopiado). 
+      </fieldset>
     `);
   }
   return new Response('');

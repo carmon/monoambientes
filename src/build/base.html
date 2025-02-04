@@ -74,14 +74,13 @@
         function setEndDate(){
           const unit = document.getElementById('room_select').value;
           const initDate = document.getElementById('init_date').value;
-          const monthCount = document.getElementById('month_count').value;
-          if (initDate && monthCount) {
+          if (initDate) {
             const d = new Date(initDate);
-            const days = monthDays.slice(d.getMonth(), d.getMonth() + monthCount).reduce((p, c) => p + c, 0);
+            const days = monthDays.slice(d.getMonth(), d.getMonth() + 3).reduce((p, c) => p + c, 0);
             d.setDate(d.getDate() + days);
             const st = d.getFullYear()+'-'+(d.getMonth()+1).toLocaleString('en-US', { minimumIntegerDigits: 2 })+'-'+d.getDate().toLocaleString('en-US', { minimumIntegerDigits: 2 });
             document.getElementById('end_date').value = st;
-            document.getElementById('price').value = PRICES[unit].monthly * monthCount;
+            document.getElementById('price').value = PRICES[unit].monthly * 3;
             document.getElementById('deposit').value = PRICES[unit].monthly;
           }
         }
@@ -92,6 +91,7 @@
         if (isMobile) {
           document.getElementById("card").style.width = '320px';
           document.getElementsByClassName("room-table").style.fontSize = '9px';
+          document.getElementsByClassName("reservation").style.fontSize = '12px';
         }
       </script>
     </div>

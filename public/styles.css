@@ -141,6 +141,10 @@ body {
   p {
     margin: 0;
   }
+  .note {
+    border-color: red;
+    background-color: lightcoral;
+  }
 }
 footer {
   padding-top: 24px;
