@@ -6,7 +6,6 @@ type Price = {
 export type Range = 'base' | 'low' | 'temp' | 'big'; 
 
 export type RoomData = {
-  unit?: number;
   capacity: number;
   range: Range;
 }
@@ -45,16 +44,48 @@ const APARTMENTS: RoomData[] = [
 const UNAVAILABLE = [1, 5, 9];
 const FILLED = [2, 4, 7, 8];
 
-export function getAvailableData(): RoomData[] {
-  return APARTMENTS.reduce((prev, curr, it) => {
-    const unit = it + 1;
-    if (UNAVAILABLE.includes(unit) || FILLED.includes(unit)) return prev;
-    return [...prev, { ...curr, unit }];
-  }, [] as RoomData[]);
+type Reservation = {
+  unit: string;
+  available: boolean;
+  start_date: Date;
+  end_date: Date;
 };
+type Room = RoomData & { unit: string };
 
-export function getUnitPrices(): Record<number, Price> {
-  return getAvailableData().reduce((prev, curr) => ({
+export async function fetchAvailableData(): Promise<Room[]> {
+  const result = await fetch(
+    `https://api.notion.com/v1/blocks/${process.env.NT_BLOCK}/children`,
+    {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Notion-Version': '2022-06-28',
+        Authorization: `Bearer ${process.env.NT_TOKEN}`,
+      }
+    }
+  );
+  const { results: [_, ...rows] } = await result.json();
+  const reservations: Reservation[] = rows.map(r => {
+    const [[unitName], [availability], [dateCell]] = r.table_row.cells;
+    const available = availability.plain_text === 'Si';
+    const date = dateCell?.mention?.date;
+    return {
+      unit: unitName.plain_text,
+      available,
+      ...(available ? { start_date: new Date(date.start), end_date: new Date(date.end) } : {}),
+    };
+  });
+
+  const now = Date.now();
+  return reservations
+    .filter(r => r.available && !(now > r.start_date.getTime() && now < r.end_date.getTime()))
+    .map(({ unit }) => ({ unit, ...APARTMENTS[Number(unit)-1] }));
+} 
+
+export async function getUnitPrices(block, token): Promise<Record<number, Price>> {
+  process.env.NT_BLOCK = block;
+  process.env.NT_TOKEN = token;
+  return (await fetchAvailableData()).reduce((prev, curr) => ({
     ...prev,
     [curr.unit || 0]: PriceRanges[curr.range],
   }), {})

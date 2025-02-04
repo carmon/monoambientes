@@ -1,11 +1,10 @@
-import { getAvailableData, PriceRanges } from "../../../src/backend/rooms";
-import type { RoomData } from "../../../src/backend/rooms";
+import { fetchAvailableData, PriceRanges } from "../../../src/backend/rooms";
 
 export async function GET(request: Request) {
   const res = request.url.match(/\?mode=([a-z]+)$/);
   if (res) {
     const [, mode] = res;
-    const available: RoomData[] = getAvailableData();
+    const available = await fetchAvailableData();
     const options = available.filter(v => mode === 'month' ? PriceRanges[v.range].monthly !== null : true);
     return new Response(`
       <label>

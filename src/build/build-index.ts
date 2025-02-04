@@ -4,19 +4,20 @@ import { getUnitPrices } from '../backend/rooms.ts';
 
 const ENV: Record<string, string> = {};
 const getEnv = (key: string) => isLocal ? ENV[key] : process.env[key];
+
 const isLocal = process.env.NODE_ENV === 'development';
+if (isLocal) {
+  // Parse .env file
+  (await fs.readFile('.env')).toString()
+    .split('\n')
+    .filter(s => !!s)
+    .forEach(s => {
+      const [k, v] = s.split('=');
+      ENV[k] = v;
+    });
+}
 
 async function generateHTML() {
-  if (isLocal) {
-    // Parse .env file
-    (await fs.readFile('.env')).toString()
-      .split('\n')
-      .filter(s => !!s)
-      .forEach(s => {
-        const [k, v] = s.split('=');
-        ENV[k] = v;
-      });
-  }
   const packageJSON = (await fs.readFile('./package.json')).toString();
   const match = packageJSON.match(/"version": "([0-9\.]+)",/);
   const version = match ? match[1] : '0.0.1';
@@ -25,7 +26,7 @@ async function generateHTML() {
   const newHTML = baseHTML
     .replace(
       '// [INSERT_ROOM_DATA]',
-      `const PRICES = ${JSON.stringify(getUnitPrices())};`
+      `const PRICES = ${JSON.stringify(await getUnitPrices(getEnv('NT_BLOCK'), getEnv('NT_TOKEN')))};`
     )
     .replace(
       '<root>', 

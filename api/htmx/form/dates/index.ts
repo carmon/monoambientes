@@ -1,11 +1,10 @@
-import { getAvailableData } from "../../../../src/backend/rooms";
-import type { RoomData } from "../../../../src/backend/rooms";
+import { fetchAvailableData } from "../../../../src/backend/rooms";
 
 export async function GET(request: Request) {
   const res = request.url.match(/\?mode=([a-z]+)&unit=([1-9])$/);
   if (res) {
     const [, mode, unit] = res;
-    const current: RoomData | undefined = getAvailableData().find(r => String(r.unit) === unit);
+    const current = (await fetchAvailableData()).find(r => String(r.unit) === unit);
     if (!current) return new Response('');
 
     const today = new Date();
