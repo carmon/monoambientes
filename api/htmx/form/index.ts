@@ -13,7 +13,7 @@ export async function GET(request: Request) {
           ${options.map(data => `<option value="${data.unit}">${data.unit} (${data.capacity} personas)</option>`).join('')}
         </select>
       </label>
-      <div hx-get="/api/htmx/form/dates?mode=${mode}&unit=${available[0].unit}" hx-target="this" hx-trigger="load once"></div>
+      <div hx-get="/api/htmx/form/dates?mode=${mode}&unit=${available[0]?.unit || 1}" hx-target="this" hx-trigger="load once"></div>
       <button type="submit">Reservar</button>
     `);
   }

@@ -52,34 +52,38 @@ type Reservation = {
 };
 type Room = RoomData & { unit: string };
 
-export async function fetchAvailableData(): Promise<Room[]> {
-  const result = await fetch(
-    `https://api.notion.com/v1/blocks/${process.env.NT_BLOCK}/children`,
-    {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-        'Notion-Version': '2022-06-28',
-        Authorization: `Bearer ${process.env.NT_TOKEN}`,
+export async function fetchAvailableData(): Promise<Room[]> { 
+  try {
+    const result = await fetch(
+      `https://api.notion.com/v1/blocks/${process.env.NT_BLOCK}/children`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Notion-Version': '2022-06-28',
+          Authorization: `Bearer ${process.env.NT_TOKEN}`,
+        }
       }
-    }
-  );
-  const { results: [_, ...rows] } = await result.json();
-  const reservations: Reservation[] = rows.map(r => {
-    const [[unitName], [availability], [dateCell]] = r.table_row.cells;
-    const available = availability.plain_text === 'Si';
-    const date = dateCell?.mention?.date;
-    return {
-      unit: unitName.plain_text,
-      available,
-      ...(available ? { start_date: new Date(date.start), end_date: new Date(date.end) } : {}),
-    };
-  });
-
-  const now = Date.now();
-  return reservations
-    .filter(r => r.available && !(now > r.start_date.getTime() && now < r.end_date.getTime()))
-    .map(({ unit }) => ({ unit, ...APARTMENTS[Number(unit)-1] }));
+    );
+    const { results: [_, ...rows] } = await result.json();
+    const reservations: Reservation[] = rows.map(r => {
+      const [[unitName], [availability], [dateCell]] = r.table_row.cells;
+      const available = availability.plain_text === 'Si';
+      const date = dateCell?.mention?.date;
+      return {
+        unit: unitName.plain_text,
+        available,
+        ...(available ? { start_date: new Date(date.start), end_date: new Date(date.end) } : {}),
+      };
+    });
+    const now = Date.now();
+    return reservations
+      .filter(r => r.available && !(now > r.start_date.getTime() && now < r.end_date.getTime()))
+      .map(({ unit }) => ({ unit, ...APARTMENTS[Number(unit)-1] }));
+  } catch (error) {
+    console.log('Error fetching Notion data', error.message);
+    return [];
+  }
 } 
 
 export async function getUnitPrices(block, token): Promise<Record<number, Price>> {
