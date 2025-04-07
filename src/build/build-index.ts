@@ -69,7 +69,7 @@ async function generateHTML() {
             <legend>Reserva</legend>
             <label>
               Modalidad
-              <select name="mode" hx-get="/api/htmx/form" hx-target="#form" hx-trigger="change">
+              <select name="mode" hx-get="/api/htmx/form" hx-target="#form" hx-trigger="change" disabled>
                 <option value="day">Diario</option>
                 <option value="month">Mensual</option>
               </select>

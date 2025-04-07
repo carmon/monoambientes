@@ -29,3 +29,7 @@ __RUN__
 ##### Known issues
 
 - [MODULE_TYPELESS_PACKAGE_JSON] error: node is currently unable to run --input-type=module on a single file, renaming it to a *.mjs will make TypeScript useless and adding "type": "module" to package.json will break vercel build.
+
+
+##### TODO
+- Make dropdown disabled when no daily or monthly room options available. 
