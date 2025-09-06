@@ -31,7 +31,7 @@ async function generateHTML() {
     .replace(
       '<root>', 
       `<span class="header">MONOAMBIENTES ORLANDO</span>
-      <p class="subheader">ALQUILER DE MONOAMBIENTES EN PLAYA UNIÓN</p>
+      <p class="subheader">ALQUILER DE MONOAMBIENTES POR DÍA EN PLAYA UNIÓN</p>
       <details class="section" hx-get="/api/htmx/mapbox" hx-trigger="click once" hx-target="#mapbox">
         <summary>Ubicación</summary>
         <div id="mapbox" />
