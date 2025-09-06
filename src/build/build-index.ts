@@ -30,11 +30,8 @@ async function generateHTML() {
     )
     .replace(
       '<root>', 
-      `<div class="avatar-container">
-        <img src="./static/avatar.webp" class="avatar" alt='Monoambientes "Orlando"' />
-      </div>
-      <span class="header">Monoambientes "Orlando"</span>
-      <p class="subheader">Alquiler de monoambientes para 1, 2 y 3 personas en Playa Unión</p>
+      `<span class="header">MONOAMBIENTES ORLANDO</span>
+      <p class="subheader">ALQUILER DE MONOAMBIENTES EN PLAYA UNIÓN</p>
       <details class="section" hx-get="/api/htmx/mapbox" hx-trigger="click once" hx-target="#mapbox">
         <summary>Ubicación</summary>
         <div id="mapbox" />

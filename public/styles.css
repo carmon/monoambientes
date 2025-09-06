@@ -12,8 +12,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8px 0 0 8px;
-  width: 32px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 100%;
   cursor: pointer;
   position: sticky;
   background-color: var(--secondary-color);
@@ -39,17 +40,6 @@ body {
   text-align: center;
   height: 100vh;
 }
-.avatar-container {
-  display: flex;
-  justify-content: center;
-  user-select: none;
-}
-.avatar {
-  width: 140px;
-  height: 140px;
-  margin: 1rem 0 1.5rem;
-  border-radius: 50%;
-}
 .header {
   font-family: 'Schabo Condensed';
   font-size: 64px;
@@ -57,6 +47,7 @@ body {
   text-wrap: auto;
 }
 .subheader {
+  font-family: 'Schabo Condensed';
   user-select: none;
 }
 .section {
