@@ -20,11 +20,11 @@ export const PriceRanges: Record<Range, Price> = {
     monthly: null,
   },
   temp: {
-    daily: 40000,
+    daily: 45000,
     monthly: null,
   },
   big: {
-    daily: 45000,
+    daily: 60000,
     monthly: null,
   }
 };

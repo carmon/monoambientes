@@ -42,14 +42,12 @@ async function generateHTML() {
           <thead>
             <th>Departamento</th>
             <th>Capacidad</th>
-            <th>Precio</th>
+            <th>Precio por día</th>
           </thead>
           <tbody id="tbody" />
         </table>
         <div class="annotations">
-          <p>Todos los departamentos son amoblados y tienen todos los servicios incluídos.</p>
-          <p>Los alquileres <u>mensuales</u> requieren un depósito de 1 mes para ocuparlos.</p>
-          <p>Los alquileres <u>diarios</u> vienen con ropa de cama, utensilios y toallas incluídas.</p>
+          <p>Todos los departamentos son amoblados y tienen todos los servicios incluidos, además de ropa de cama, utensilios y toallas.</p>
         </div>
       </details>
       <details class="section">
@@ -84,7 +82,7 @@ async function generateHTML() {
         </div>
       </details>
       <footer>
-        Monoambientes v${version} - ©Copyright 2025 - Todos los derechos reservados
+        Monoambientes v${version} - ©Copyright 2027 - Todos los derechos reservados
       </footer>`
     );
   // if (isLocal) console.log(newHTML);
